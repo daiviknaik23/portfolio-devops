@@ -7,20 +7,41 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+
   build: {
     outDir: 'dist',
     sourcemap: false,
     minify: 'terser',
+
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          animations: ['framer-motion'],
-          charts: ['chart.js', 'react-chartjs-2'],
-        },
+
+        manualChunks(id) {
+
+          if (id.includes('react-router-dom')) {
+            return 'router'
+          }
+
+          if (id.includes('framer-motion')) {
+            return 'animations'
+          }
+
+          if (
+            id.includes('chart.js') ||
+            id.includes('react-chartjs-2')
+          ) {
+            return 'charts'
+          }
+
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
+        }
+
       },
     },
   },
+
   server: {
     port: 3000,
     open: true,
