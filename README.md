@@ -297,4 +297,4 @@ MIT License - feel free to use this project as a template for your own portfolio
 
 ---
 
-**Built with ❤️ by Daivik Naik using React + AWS**
+**Built by Daivik Naik using React + AWS**
