@@ -36,6 +36,18 @@ pipeline {
             }
         }
 
+        stage('Run Ansible Setup') {
+            steps {
+
+                echo '⚙️ Running Ansible automation setup...'
+
+                sh '''
+                    cd ansible
+                    sudo ansible-playbook -i inventory.ini setup.yml
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 echo '📦 Installing project dependencies...'
