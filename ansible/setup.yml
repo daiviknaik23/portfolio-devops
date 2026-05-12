@@ -3,26 +3,26 @@
 
   tasks:
 
-    - name: Update apt packages
-      apt:
-        update_cache: yes
+    - name: Verify Docker installation
+      command: docker --version
+      register: docker_output
 
-    - name: Install Docker
-      apt:
-        name: docker.io
-        state: present
+    - name: Show Docker version
+      debug:
+        var: docker_output.stdout
 
-    - name: Install AWS CLI
-      apt:
-        name: awscli
-        state: present
+    - name: Verify NodeJS installation
+      command: node --version
+      register: node_output
 
-    - name: Install NodeJS
-      apt:
-        name: nodejs
-        state: present
+    - name: Show NodeJS version
+      debug:
+        var: node_output.stdout
 
-    - name: Install npm
-      apt:
-        name: npm
-        state: present
+    - name: Verify AWS CLI installation
+      command: aws --version
+      register: aws_output
+
+    - name: Show AWS CLI version
+      debug:
+        var: aws_output.stdout
