@@ -43,7 +43,7 @@ pipeline {
 
                 sh '''
                     cd ansible
-                    sudo ansible-playbook -i inventory.ini setup.yml
+                    ansible-playbook -i inventory.ini setup.yml
                 '''
             }
         }
