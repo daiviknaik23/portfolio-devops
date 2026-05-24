@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #6366f1;
   --color-primary-light: #818cf8;
@@ -29,6 +31,21 @@
 }
 
 @layer base {
+  /* Class-based light theme overrides (since dark theme is default) */
+  html:not(.dark) {
+    --color-surface: #f8fafc;
+    --color-surface-light: #f1f5f9;
+    --color-surface-card: #ffffff;
+    --color-surface-hover: #e2e8f0;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-border-light: #cbd5e1;
+    --color-glass: rgba(255, 255, 255, 0.7);
+    --color-glass-light: rgba(241, 245, 249, 0.5);
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -47,6 +64,7 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
   ::-webkit-scrollbar {
     width: 6px;
