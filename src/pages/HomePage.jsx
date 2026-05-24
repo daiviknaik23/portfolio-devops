@@ -74,7 +74,7 @@ function HeroSection() {
               <Link to="/contact" className="btn-primary">
                 Get In Touch <ArrowRight size={18} />
               </Link>
-              <a href="/resume.pdf" className="btn-outline">
+              <a href="/Resume.pdf" target='_Blank' className="btn-outline">
                 <Download size={18} /> Resume
               </a>
             </div>
