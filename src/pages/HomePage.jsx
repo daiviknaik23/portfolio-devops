@@ -56,7 +56,7 @@ function HeroSection() {
               Available for opportunities
             </motion.div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-4 tracking-tight text-white">
               Hi, I'm{' '}
               <span className="text-gradient">Daivik Naik</span>
             </h1>
