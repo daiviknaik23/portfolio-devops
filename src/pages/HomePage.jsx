@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Mail, Download, ArrowRight, ChevronDown,
   Star, GitFork, Users, Activity, ExternalLink, Cloud, Workflow, GitBranch,
-  Server, Zap, Globe, Code2, Shield, Database
+  Server, Zap, Globe, Code2, Shield, Database, Check
 } from 'lucide-react';
 import { GithubIcon as Github, LinkedinIcon as Linkedin, TwitterIcon as Twitter } from '../components/BrandIcons';
 import Typed from 'typed.js';
@@ -70,7 +70,7 @@ function HeroSection() {
               systems that scale.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-wrap gap-4 mb-6">
               <Link to="/contact" className="btn-primary">
                 Get In Touch <ArrowRight size={18} />
               </Link>
@@ -78,6 +78,92 @@ function HeroSection() {
                 <Download size={18} /> Resume
               </a>
             </div>
+
+            {/* ATS Resume Score Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              whileHover={{ y: -5, scale: 1.01 }}
+              className="glass rounded-2xl p-5 border border-primary/20 backdrop-blur-xl mb-8 max-w-lg relative overflow-hidden group shadow-lg"
+            >
+              {/* Background accent glow inside the card */}
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-neon-green/10 rounded-full blur-2xl group-hover:bg-neon-green/20 transition-all duration-500" />
+              
+              <div className="flex flex-col sm:flex-row items-center gap-6 relative z-10">
+                {/* Circular indicator container */}
+                <div className="flex-shrink-0 relative flex items-center justify-center w-24 h-24">
+                  {/* Glowing background */}
+                  <div className="absolute inset-0 rounded-full bg-neon-green/10 blur-md group-hover:scale-110 transition-transform duration-500" />
+                  
+                  {/* SVG Circle */}
+                  <svg className="w-20 h-20 transform -rotate-90">
+                    {/* Background Track */}
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="34"
+                      className="stroke-surface-light"
+                      strokeWidth="6"
+                      fill="transparent"
+                    />
+                    {/* Foreground Circle Progress */}
+                    <motion.circle
+                      cx="40"
+                      cy="40"
+                      r="34"
+                      className="stroke-neon-green"
+                      strokeWidth="6"
+                      fill="transparent"
+                      strokeDasharray="213.6"
+                      initial={{ strokeDashoffset: 213.6 }}
+                      animate={{ strokeDashoffset: 32 }}
+                      transition={{ duration: 1.5, ease: "easeOut", delay: 0.6 }}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  
+                  {/* Centered Text */}
+                  <div className="absolute flex flex-col items-center justify-center">
+                    <span className="text-xl font-extrabold text-white">85%</span>
+                    <span className="text-[10px] text-neon-green font-semibold tracking-wider uppercase">Score</span>
+                  </div>
+                </div>
+
+                {/* Info and checklist */}
+                <div className="flex-grow text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
+                    <h3 className="text-lg font-bold text-white tracking-wide">ATS Resume Score</h3>
+                    <span className="flex h-2 w-2 relative">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-green opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-green"></span>
+                    </span>
+                  </div>
+                  
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-xs text-text-secondary font-medium">
+                    {[
+                      "DevOps Keywords Added",
+                      "AWS & Docker Skills Included",
+                      "CI/CD Project Experience",
+                      "Clean ATS-Friendly Resume Format"
+                    ].map((point, index) => (
+                      <motion.li 
+                        key={index}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.8 + index * 0.1 }}
+                        className="flex items-center gap-2"
+                      >
+                        <span className="flex-shrink-0 w-4 h-4 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/20">
+                          <Check size={10} strokeWidth={3} />
+                        </span>
+                        <span className="text-left text-white/90">{point}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
 
             {/* Social links */}
             <div className="flex items-center gap-4">
