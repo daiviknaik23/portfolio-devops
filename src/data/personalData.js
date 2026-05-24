@@ -29,17 +29,24 @@ export const personalInfo = {
 export const education = [
   {
     degree: "Bachelor of Engineering in Computer Science",
-    institution: "KLE Technological University",
+    institution: "KLE Dr. M. S. Sheshgiri College of Engineering and Technology, Belagavi",
     year: "2021 - 2025",
     grade: "CGPA: 8.5/10",
     description: "Focused on Cloud Computing, DevOps, AI/ML, and Full Stack Development",
   },
   {
-    degree: "Higher Secondary Certificate",
-    institution: "Science College",
+    degree: "Pre-University Education (2nd PUC)",
+    institution: "RLS Science PU College, Belagavi",
     year: "2019 - 2021",
     grade: "Percentage: 92%",
-    description: "Science stream with Computer Science",
+    description: "Science stream with Computer Science focus",
+  },
+  {
+    degree: "Secondary School Leaving Certificate (SSLC)",
+    institution: "KLE Independent School, Belagavi",
+    year: "2017 - 2019",
+    grade: "Percentage: 90%",
+    description: "Focused on Science, Mathematics, and Computer Applications",
   },
 ];
 
