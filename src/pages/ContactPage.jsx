@@ -4,6 +4,7 @@ import { Send, Mail, MapPin, Phone, CheckCircle2, AlertCircle } from 'lucide-rea
 import { GithubIcon as Github, LinkedinIcon as Linkedin, TwitterIcon as Twitter } from '../components/BrandIcons';
 import SectionWrapper from '../components/SectionWrapper';
 import { personalInfo } from '../data/personalData';
+import { toast } from 'react-hot-toast';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -15,12 +16,22 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    // Simulate EmailJS send
-    await new Promise((r) => setTimeout(r, 1500));
-    setStatus('success');
-    setSending(false);
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setTimeout(() => setStatus(null), 5000);
+    try {
+      // Simulate EmailJS send
+      await new Promise((r) => setTimeout(r, 1500));
+      setStatus('success');
+      toast.success('Message sent successfully!', {
+        duration: 3500,
+        position: 'bottom-right',
+      });
+      setSending(false);
+      setForm({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setStatus(null), 5000);
+    } catch (err) {
+      setStatus('error');
+      toast.error('Something went wrong. Please try again.');
+      setSending(false);
+    }
   };
 
   const socials = [
@@ -106,7 +117,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-text-secondary mb-2">Message</label>
-                <textarea name="message" value={form.message} onChange={handleChange} required rows={5} className="input-field resize-none" placeholder="Tell me about your project..." />
+                <textarea name="message" value={form.message} onChange={handleChange} required rows={5} className="input-field resize-none" placeholder="Type your message here..." />
               </div>
               <button type="submit" disabled={sending} className="btn-primary w-full justify-center">
                 {sending ? (
