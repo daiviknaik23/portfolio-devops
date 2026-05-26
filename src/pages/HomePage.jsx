@@ -57,7 +57,7 @@ function HeroSection() {
             </motion.div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-4 tracking-tight text-white">
-              Hi, I'm{' '}
+              Hello, I'm{' '}
               <span className="text-gradient">Daivik Naik</span>
             </h1>
 
