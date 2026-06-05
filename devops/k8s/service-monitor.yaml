@@ -1,0 +1,33 @@
+# =============================================================
+# Kubernetes ServiceMonitor for Prometheus Operator
+# Enables auto-discovery of portfolio metrics in K8s clusters
+# =============================================================
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: portfolio-monitor
+  labels:
+    app: portfolio
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: portfolio
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: http
+      path: /nginx_status
+      interval: 15s
+      scrapeTimeout: 10s
+---
+# ─── Prometheus Scrape Annotations (Alternative to ServiceMonitor) ─
+# If NOT using Prometheus Operator, add these annotations to your
+# Kubernetes Service/Pod for prometheus.io auto-discovery:
+#
+# annotations:
+#   prometheus.io/scrape: "true"
+#   prometheus.io/port: "80"
+#   prometheus.io/path: "/nginx_status"

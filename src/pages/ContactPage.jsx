@@ -14,25 +14,43 @@ export default function ContactPage() {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSending(true);
-    try {
-      // Simulate EmailJS send
-      await new Promise((r) => setTimeout(r, 1500));
-      setStatus('success');
-      toast.success('Message sent successfully!', {
-        duration: 3500,
-        position: 'bottom-right',
+  e.preventDefault();
+  setSending(true);
+
+  try {
+    const response = await fetch("https://formspree.io/f/xbdedlzl", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        subject: form.subject,
+        message: form.message,
+      }),
+    });
+
+    if (response.ok) {
+      setStatus("success");
+      setForm({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
       });
-      setSending(false);
-      setForm({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus(null), 5000);
-    } catch (err) {
-      setStatus('error');
-      toast.error('Something went wrong. Please try again.');
-      setSending(false);
+    } else {
+      setStatus("error");
     }
-  };
+  } catch (error) {
+    console.error("Form submission error:", error);
+    setStatus("error");
+  }
+
+  setSending(false);
+  setTimeout(() => setStatus(null), 5000);
+};
 
   const socials = [
     { icon: Github, label: 'GitHub', href: personalInfo.social.github, value: '@daiviknaik23' },

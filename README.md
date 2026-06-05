@@ -54,6 +54,7 @@ Developer → GitHub → Jenkins → Build → S3 → CloudFront → Users
 | **CI/CD** | Jenkins, GitHub Actions, GitHub Webhooks |
 | **Cloud** | AWS S3, CloudFront, Route 53, ACM, IAM |
 | **IaC** | Terraform, Docker, Kubernetes |
+| **Monitoring** | Prometheus, Grafana, Node Exporter, Nginx Exporter |
 | **Utilities** | EmailJS, React Router, React Hot Toast |
 
 ---
@@ -88,6 +89,9 @@ Developer → GitHub → Jenkins → Build → S3 → CloudFront → Users
 - 🏗 Terraform infrastructure as code
 - 🔐 IAM security policies
 - ⚡ CloudFront CDN distribution
+- 📊 Prometheus + Grafana monitoring
+- 🔔 Automated alerting rules
+- 📈 Pre-built Grafana dashboards
 
 ---
 
@@ -226,6 +230,19 @@ portfolio-devops-project/
 │   ├── Jenkinsfile
 │   ├── deploy.sh
 │   ├── nginx.conf
+│   ├── monitoring/                        # 📊 Prometheus + Grafana
+│   │   ├── docker-compose.monitoring.yml   # Standalone monitoring stack
+│   │   ├── prometheus/
+│   │   │   ├── prometheus.yml              # Scrape configuration
+│   │   │   └── alert-rules.yml             # Alerting rules
+│   │   └── grafana/
+│   │       ├── provisioning/
+│   │       │   ├── datasources/
+│   │       │   │   └── prometheus.yml       # Auto-provision data source
+│   │       │   └── dashboards/
+│   │       │       └── dashboards.yml       # Dashboard provisioning
+│   │       └── dashboards/
+│   │           └── portfolio-dashboard.json # Pre-built dashboard
 │   ├── aws/
 │   │   ├── s3-bucket-policy.json
 │   │   └── iam-policy.json
@@ -234,9 +251,11 @@ portfolio-devops-project/
 │   ├── terraform/
 │   │   └── main.tf
 │   └── k8s/
-│       └── deployment.yaml
+│       ├── deployment.yaml
+│       └── service-monitor.yaml            # Prometheus Operator CRD
 ├── .github/workflows/
 │   └── deploy.yml
+├── docker-compose.yml      # Full stack (App + Monitoring)
 ├── Dockerfile
 ├── index.html
 ├── package.json
@@ -276,6 +295,47 @@ terraform apply
 
 ---
 
+## 📊 Monitoring Setup (Prometheus + Grafana)
+
+### Architecture
+```
+Nginx (stub_status) → Nginx Exporter → Prometheus → Grafana
+       Host         → Node Exporter  ↗
+```
+
+### Quick Start
+```bash
+# Option 1: Full stack (App + Monitoring)
+docker-compose up -d
+
+# Option 2: Monitoring only (assumes app is already running)
+cd devops/monitoring
+docker-compose -f docker-compose.monitoring.yml up -d
+```
+
+### Access
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| **Grafana** | http://localhost:3000 | admin / admin |
+| **Prometheus** | http://localhost:9090 | — |
+| **Nginx Exporter** | http://localhost:9113/metrics | — |
+| **Node Exporter** | http://localhost:9100/metrics | — |
+
+### What's Monitored
+- **Website Health** – Up/Down status, request rate, active connections
+- **HTTP Metrics** – Request rate, response codes, connection states
+- **Host Resources** – CPU, Memory, Disk usage, Network I/O
+- **Alerting** – High error rates, website downtime, resource exhaustion
+
+### Kubernetes
+If using Prometheus Operator in K8s, apply the ServiceMonitor:
+```bash
+kubectl apply -f devops/k8s/service-monitor.yaml
+```
+Pod annotations for auto-discovery are already configured in `deployment.yaml`.
+
+---
+
 ## 🔮 Future Scope
 
 - [ ] Progressive Web App (PWA) support
@@ -286,8 +346,10 @@ terraform apply
 - [ ] Multi-region deployment
 - [ ] A/B testing infrastructure
 - [ ] Real-time visitor analytics
-- [ ] Automated performance monitoring
+- [x] ~~Automated performance monitoring~~ ✅ Prometheus + Grafana
 - [ ] Blue/Green deployment strategy
+- [ ] Alertmanager with Slack/Email notifications
+- [ ] Log aggregation with Loki
 
 ---
 

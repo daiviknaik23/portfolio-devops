@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Monitoring runtime data (Docker volumes)
+prometheus-data/
+grafana-data/

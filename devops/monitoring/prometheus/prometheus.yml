@@ -1,0 +1,30 @@
+# =============================================================
+# Prometheus Configuration
+# Portfolio Monitoring
+# =============================================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# =============================================================
+# Scrape Targets
+# =============================================================
+
+scrape_configs:
+
+  # ─────────────────────────────────────────
+  # Prometheus Self Monitoring
+  # ─────────────────────────────────────────
+  - job_name: "prometheus"
+
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  # ─────────────────────────────────────────
+  # Node Exporter Monitoring
+  # ─────────────────────────────────────────
+  - job_name: "node-exporter"
+
+    static_configs:
+      - targets: ["node-exporter:9100"]

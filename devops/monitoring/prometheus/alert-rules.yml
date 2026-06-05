@@ -1,0 +1,125 @@
+# =============================================================
+# Prometheus Alert Rules
+# Portfolio Website Monitoring Alerts
+# =============================================================
+
+groups:
+  - name: portfolio-website-alerts
+    rules:
+
+      # ─── High Error Rate ─────────────────────────────────────
+      - alert: HighErrorRate
+        expr: rate(nginx_http_requests_total{status=~"5.."}[5m]) > 0.5
+        for: 2m
+        labels:
+          severity: critical
+          service: portfolio-website
+        annotations:
+          summary: "High 5xx error rate on portfolio website"
+          description: >
+            The portfolio website is experiencing more than 0.5 req/s
+            of 5xx errors for the last 2 minutes.
+            Current rate: {{ $value }} req/s
+
+      # ─── Website Down ────────────────────────────────────────
+      - alert: WebsiteDown
+        expr: up{job="nginx"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: portfolio-website
+        annotations:
+          summary: "Portfolio website Nginx is DOWN"
+          description: >
+            The Nginx server serving the portfolio website has been 
+            unreachable for more than 1 minute.
+
+      # ─── High Request Latency ────────────────────────────────
+      - alert: HighRequestLatency
+        expr: nginx_http_request_duration_seconds{quantile="0.9"} > 1
+        for: 5m
+        labels:
+          severity: warning
+          service: portfolio-website
+        annotations:
+          summary: "High request latency on portfolio website"
+          description: >
+            90th percentile request latency is above 1 second 
+            for the last 5 minutes. Current: {{ $value }}s
+
+      # ─── High Memory Usage ──────────────────────────────────
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+        annotations:
+          summary: "High memory usage on host"
+          description: >
+            Host memory usage is above 85% for 5 minutes.
+            Current usage: {{ $value }}%
+
+      # ─── High CPU Usage ─────────────────────────────────────
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+        annotations:
+          summary: "High CPU usage on host"
+          description: >
+            Host CPU usage is above 80% for 5 minutes.
+            Current usage: {{ $value }}%
+
+      # ─── Disk Space Low ─────────────────────────────────────
+      - alert: DiskSpaceLow
+        expr: (1 - (node_filesystem_avail_bytes{fstype!~"tmpfs|fuse.lxcfs"} / node_filesystem_size_bytes{fstype!~"tmpfs|fuse.lxcfs"})) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: infrastructure
+        annotations:
+          summary: "Low disk space on host"
+          description: >
+            Disk usage is above 85%.
+            Current usage: {{ $value }}%
+
+      # ─── Nginx Active Connections High ───────────────────────
+      - alert: HighNginxConnections
+        expr: nginx_connections_active > 500
+        for: 5m
+        labels:
+          severity: warning
+          service: portfolio-website
+        annotations:
+          summary: "High number of active Nginx connections"
+          description: >
+            Active Nginx connections exceeded 500 for 5 minutes.
+            Current connections: {{ $value }}
+
+  - name: prometheus-self-monitoring
+    rules:
+
+      # ─── Prometheus Target Down ──────────────────────────────
+      - alert: PrometheusTargetDown
+        expr: up == 0
+        for: 3m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus target {{ $labels.job }} is down"
+          description: >
+            The scrape target {{ $labels.instance }} in job 
+            {{ $labels.job }} has been down for more than 3 minutes.
+
+      # ─── Prometheus Config Reload Failed ─────────────────────
+      - alert: PrometheusConfigReloadFailed
+        expr: prometheus_config_last_reload_successful == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Prometheus configuration reload failed"
+          description: "The last Prometheus config reload attempt failed."
