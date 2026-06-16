@@ -14,7 +14,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: MapPin, label: 'Location', value: personalInfo.location },
-                { icon: Calendar, label: 'Experience', value: '2+ Years' },
+                { icon: Calendar, label: 'Experience', value: '0 Years' },
                 { icon: Target, label: 'Focus', value: 'Cloud & DevOps' },
                 { icon: Rocket, label: 'Goal', value: 'SDE / DevOps Engineer' },
               ].map((item) => (
