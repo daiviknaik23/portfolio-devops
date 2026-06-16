@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, Target, Rocket, Award, Briefcase, GraduationCap } from 'lucide-react';
+import { MapPin, Calendar, Target, Rocket, Award, GraduationCap } from 'lucide-react';
 import SectionWrapper from '../components/SectionWrapper';
-import { personalInfo, education, experience, achievements } from '../data/personalData';
+import { personalInfo, education, achievements } from '../data/personalData';
 
 export default function AboutPage() {
   return (
@@ -46,7 +46,7 @@ export default function AboutPage() {
       <SectionWrapper>
         <div className="text-center mb-12">
           <h2 className="section-title text-gradient">My Journey</h2>
-          <p className="section-subtitle">Education and professional experience</p>
+          <p className="section-subtitle">Education and academic milestones</p>
         </div>
         <div className="max-w-3xl mx-auto">
           <h3 className="text-lg font-semibold text-text-primary mb-6 flex items-center gap-2">
@@ -64,31 +64,6 @@ export default function AboutPage() {
                   </div>
                   <p className="text-text-secondary text-sm mb-1">{edu.institution}</p>
                   <p className="text-primary-light text-sm font-medium">{edu.grade}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <h3 className="text-lg font-semibold text-text-primary mb-6 flex items-center gap-2">
-            <Briefcase size={20} className="text-primary-light" /> Experience
-          </h3>
-          <div className="space-y-6 relative">
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent to-neon-purple" />
-            {experience.map((exp, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.15 }} className="relative pl-16">
-                <div className="absolute left-4 top-2 w-4 h-4 rounded-full bg-accent border-2 border-surface z-10" />
-                <div className="card">
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <h4 className="font-semibold text-text-primary">{exp.title}</h4>
-                    <span className="tag">{exp.period}</span>
-                  </div>
-                  <p className="text-accent text-sm font-medium mb-2">{exp.company}</p>
-                  <p className="text-text-secondary text-sm mb-3">{exp.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.tech.map((t) => (
-                      <span key={t} className="text-xs px-2 py-1 rounded-md bg-surface-light text-text-muted border border-border">{t}</span>
-                    ))}
-                  </div>
                 </div>
               </motion.div>
             ))}
