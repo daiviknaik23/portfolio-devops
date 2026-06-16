@@ -43,7 +43,7 @@ export default function ResumePage() {
             {education.map((edu, i) => (
               <div key={i} className="mb-4 pl-4 border-l-2 border-primary/30">
                 <h4 className="font-medium text-text-primary">{edu.degree}</h4>
-                <p className="text-text-secondary text-sm">{edu.institution} | {edu.year}</p>
+                <p className="text-text-secondary text-sm">{edu.institution}{edu.year && ` | ${edu.year}`}</p>
                 <p className="text-primary-light text-sm">{edu.grade}</p>
               </div>
             ))}

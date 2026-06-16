@@ -60,7 +60,7 @@ export default function AboutPage() {
                 <div className="card">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <h4 className="font-semibold text-text-primary">{edu.degree}</h4>
-                    <span className="tag">{edu.year}</span>
+                    {edu.year && <span className="tag">{edu.year}</span>}
                   </div>
                   <p className="text-text-secondary text-sm mb-1">{edu.institution}</p>
                   <p className="text-primary-light text-sm font-medium">{edu.grade}</p>
