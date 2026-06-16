@@ -58,7 +58,7 @@ function HeroSection() {
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-4 tracking-tight text-white">
               Hi, I'm{' '}
-              <span className="text-gradient">Daivik Naik</span>
+              <span className="text-gradient">Liladar Jangid</span>
             </h1>
 
             <div className="text-xl sm:text-2xl text-text-secondary mb-6 h-10">
