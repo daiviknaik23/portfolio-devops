@@ -346,7 +346,6 @@ Pod annotations for auto-discovery are already configured in `deployment.yaml`.
 - [ ] Multi-region deployment
 - [ ] A/B testing infrastructure
 - [ ] Real-time visitor analytics
-- [x] ~~Automated performance monitoring~~ ✅ Prometheus + Grafana
 - [ ] Blue/Green deployment strategy
 - [ ] Alertmanager with Slack/Email notifications
 - [ ] Log aggregation with Loki
